@@ -37,8 +37,14 @@ public:
 		Optional<ValueType>::operator=(orig);
 		return *this;
 	}
+
+	bool operator<=(StrongId &orig){
+		return ((this==orig)||(this<orig))?true:false;
+	}
+
 	friend ostream& operator<< (ostream& os,const StrongId& variable)
 	{
+		os<<name()<<": ";
 		if(variable.isEmpty())
 		{
 			os<<"Empty";
@@ -51,8 +57,22 @@ public:
 		return os;
 	}
 
+	ValueType value() const
+	{
+		try
+		{
+			return Optional<ValueType>::value();
+		}
+		catch(std::logic_error& logicError)
+		{
+			throw std::logic_error("ID has no value");
+		}
+
+	}
+
 	// Functions
 	static const char* name() { return Properties::name(); }
 };
+
 
 #endif /* STRONGID_H_ */
