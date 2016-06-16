@@ -7,12 +7,12 @@ static void testEmptyConstruction();
 static void testName();
 static void testConstructionWithValue();
 static void testEqualityComparison();
-//static void testLessThanComparison();
-//static void testEmptyDereference();
+static void testLessThanComparison();
+static void testEmptyDereference();
 static void testCopy();
 static void testAssign();
-//
-//
+
+
 void runStrongIdTests()
 {
     std::cout << "=== StrongId tests ===" << std::endl;
@@ -20,8 +20,8 @@ void runStrongIdTests()
     testEmptyConstruction();
     testConstructionWithValue();
     testEqualityComparison();
-//    testLessThanComparison();
-//    testEmptyDereference();
+    testLessThanComparison();
+    testEmptyDereference();
     testCopy();
     testAssign();
 }
@@ -76,38 +76,38 @@ void testEqualityComparison()
     std::cout << "nonEmpty == nonEmpty (not-equal): " << (nonEmpty1 == nonEmpty2) << std::endl;
     std::cout << "nonEmpty == nonEmpty (equal) : " << (nonEmpty1 == nonEmpty3) << std::endl;
 }
-//
-//void testLessThanComparison()
-//{
-//    std::cout << "-- testLessThanComparison" << std::endl;
-//
-//    TestId empty1;
-//    TestId empty2;
-//    TestId nonEmpty1(10);
-//    TestId nonEmpty2(20);
-//
-//    std::cout << "empty < empty: " << (empty1 < empty2) << std::endl;
-//    std::cout << "empty < nonEmpty: " << (empty1 < nonEmpty1) << std::endl;
-//    std::cout << "nonEmpty < empty: " << (nonEmpty1 < empty1) << std::endl;
-//    std::cout << "nonEmpty1 < nonEmpty2: " << (nonEmpty1 < nonEmpty2) << std::endl;
-//    std::cout << "nonEmpty2 < nonEmpty1: " << (nonEmpty2 < nonEmpty1) << std::endl;
-//}
-//
-//void testEmptyDereference()
-//{
-//    std::cout << "-- testEmptyDereference" << std::endl;
-//
-//    const TestId empty;
-//    try
-//    {
-//        std::cout << empty.value() << std::endl;
-//    }
-//    catch(std::logic_error& logicError)
-//    {
-//        std::cout << "Exception: " << logicError.what() << std::endl;
-//    }
-//}
-//
+
+void testLessThanComparison()
+{
+    std::cout << "-- testLessThanComparison" << std::endl;
+
+    TestId empty1;
+    TestId empty2;
+    TestId nonEmpty1(10);
+    TestId nonEmpty2(20);
+
+    std::cout << "empty < empty: " << (empty1 < empty2) << std::endl;
+    std::cout << "empty < nonEmpty: " << (empty1 < nonEmpty1) << std::endl;
+    std::cout << "nonEmpty < empty: " << (nonEmpty1 < empty1) << std::endl;
+    std::cout << "nonEmpty1 < nonEmpty2: " << (nonEmpty1 < nonEmpty2) << std::endl;
+    std::cout << "nonEmpty2 < nonEmpty1: " << (nonEmpty2 < nonEmpty1) << std::endl;
+}
+
+void testEmptyDereference()
+{
+    std::cout << "-- testEmptyDereference" << std::endl;
+
+    const TestId empty;
+    try
+    {
+        std::cout << empty.value() << std::endl;
+    }
+    catch(std::logic_error& logicError)
+    {
+        std::cout << "Exception: " << logicError.what() << std::endl;
+    }
+}
+
 void testCopy()
 {
     std::cout << "-- testCopy" << std::endl;
@@ -116,11 +116,9 @@ void testCopy()
     TestId nonEmpty(10);
 
     TestId copyFromEmpty = empty;
-//    std::cout << "Empty = " << empty.value() << std::endl;
     std::cout << "copyFromEmpty = " << copyFromEmpty << std::endl;
 
     TestId copyFromNonEmpty = nonEmpty;
-//    std::cout << "NonEmpty = " << nonEmpty << std::endl;
     std::cout << "copyFromNonEmpty = " << copyFromNonEmpty << std::endl;
 }
 //

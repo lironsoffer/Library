@@ -75,18 +75,18 @@ void testEqualityComparison()
 
 void testLessThanComparison()
 {
-//    std::cout << "-- testLessThanComparison" << std::endl;
+    std::cout << "-- testLessThanComparison" << std::endl;
 
-//    Optional<int> empty1 = None;
-//    Optional<int> empty2 = None;
-//    Optional<int> nonEmpty1 = 10;
-//    Optional<int> nonEmpty2 = 20;
-//
-//    std::cout << "empty < empty: " << (empty1 < empty2) << std::endl;
-//    std::cout << "empty < nonEmpty: " << (empty1 < nonEmpty1) << std::endl;
-//    std::cout << "nonEmpty < empty: " << (nonEmpty1 < empty1) << std::endl;
-//    std::cout << "nonEmpty1 < nonEmpty2: " << (nonEmpty1 < nonEmpty2) << std::endl;
-//    std::cout << "nonEmpty2 < nonEmpty1: " << (nonEmpty2 < nonEmpty1) << std::endl;
+    Optional<int> empty1 = None;
+    Optional<int> empty2 = None;
+    Optional<int> nonEmpty1 = 10;
+    Optional<int> nonEmpty2 = 20;
+
+    std::cout << "empty < empty: " << (empty1 < empty2) << std::endl;
+    std::cout << "empty < nonEmpty: " << (empty1 < nonEmpty1) << std::endl;
+    std::cout << "nonEmpty < empty: " << (nonEmpty1 < empty1) << std::endl;
+    std::cout << "nonEmpty1 < nonEmpty2: " << (nonEmpty1 < nonEmpty2) << std::endl;
+    std::cout << "nonEmpty2 < nonEmpty1: " << (nonEmpty2 < nonEmpty1) << std::endl;
 }
 
 void testEmptyDereference()
