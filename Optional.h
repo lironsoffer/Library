@@ -48,7 +48,7 @@ public:
 		{
 		return !(this->isEmpty());
 		}
-	bool operator < (const Optional &orig)
+	bool operator < (const Optional &orig) const
 	{
 		if((this->_paramType==paramNone)&&(orig._paramType!=paramNone))
 		{
@@ -60,7 +60,7 @@ public:
 		}
 		return false;
 	}
-	bool operator ==(const Optional &orig)
+	bool operator ==(const Optional &orig) const
 		{
 			if(((orig._paramType)==(this->_paramType))&&((orig._paramType)==(paramNone)))
 				{
