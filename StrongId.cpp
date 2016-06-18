@@ -7,12 +7,3 @@
 
 #include "StrongId.h"
 
-//StrongId::StrongId() {
-//	// TODO Auto-generated constructor stub
-//
-//}
-
-//StrongId::~StrongId() {
-//	// TODO Auto-generated destructor stub
-//}
-//

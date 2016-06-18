@@ -28,7 +28,7 @@ public:
 	virtual ~StrongId(){}
 
 	// Operators
-	StrongId& operator=(StrongId &orig){
+	StrongId& operator=(const StrongId &orig){
 		if (this==&orig)
 		{
 			return *this;
@@ -38,7 +38,7 @@ public:
 		return *this;
 	}
 
-	bool operator<=(StrongId &orig){
+	bool operator<=(const StrongId &orig) const {
 		return ((this==orig)||(this<orig))?true:false;
 	}
 

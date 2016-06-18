@@ -11,10 +11,12 @@
 #include "Properties.h"
 #include "StrongId.h"
 
+static const None_type Empty;
+
 class BookIdProperties
 {
 public:
-    typedef int ValueType;
+    typedef unsigned int ValueType;
     static const char* name() { return "BookId"; }
 };
 
@@ -27,5 +29,6 @@ public:
 
 typedef StrongId<UserIdProperties> UserId;
 typedef StrongId<BookIdProperties> BookId;
+
 
 #endif /* PROPERTIES_H_ */
