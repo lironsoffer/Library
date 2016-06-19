@@ -29,6 +29,18 @@ public:
 
 	inline bool isLoaned() const { return _isLoaned; }
 
+	LoanInfo& operator=(const LoanInfo &otherLoanInfo)
+	{
+		if(this==&otherLoanInfo)
+		{
+			return *this;
+		}
+		_bookId=otherLoanInfo._bookId;
+		_date=otherLoanInfo._date;
+		_isLoaned=otherLoanInfo._isLoaned;
+		return *this;
+	}
+
 	friend ostream& operator<< (ostream& os,const LoanInfo &loanInfo)
 	{
 		if(!loanInfo.isLoaned())
@@ -39,11 +51,16 @@ public:
 				loanInfo._bookId<<"}, "<<loanInfo._date<<"}";
 	}
 
-
+	friend bool isLoanedEarlier(const LoanInfo &left,const LoanInfo &right);
 private:
 	BookId _bookId;
 	Date _date;
 	bool _isLoaned;
 };
+
+inline bool isLoanedEarlier(const LoanInfo &left,const LoanInfo &right)
+{
+	return left._date<right._date;
+}
 
 #endif /* LOANINFO_H_ */

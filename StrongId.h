@@ -42,7 +42,7 @@ public:
 		return ((this==orig)||(this<orig))?true:false;
 	}
 
-	friend ostream& operator<< (ostream& os,const StrongId& variable)
+	friend std::ostream& operator<< (std::ostream& os,const StrongId& variable)
 	{
 		os<<name()<<": ";
 		if(variable.isEmpty())

@@ -1,8 +1,6 @@
 /*
  * Optional.h
  *
- *  Created on: Jun 11, 2016
- *      Author: Ben
  */
 
 #ifndef OPTIONAL_H_
@@ -10,9 +8,8 @@
 #include <iostream>
 #include <typeinfo>
 #include <stdexcept>
-using namespace std;
-
-enum optionalparam {paramNone,paramint,paramdouble};
+//using namespace std;
+using std::string;
 
 class None_type {};
 static const None_type None;
@@ -20,72 +17,65 @@ static const None_type None;
 template <typename T>
 class Optional {
 public:
-	Optional(): _paramValue(),_paramType(paramNone){}
-	Optional(T param): _paramValue(param),_paramType(typeid(param)==typeid(double)?
-			paramdouble:paramint) {}
-	Optional(None_type): _paramValue(),_paramType(paramNone){}
-	Optional(const Optional & orig): _paramValue(orig._paramValue),
-			_paramType(orig._paramType){}
+	Optional(): _value(),_isEmpty(true){}
+	Optional(T param): _value(param),_isEmpty(false) {}
+	Optional(None_type): _value(),_isEmpty(true){}
+	Optional(const Optional & orig): _value(orig._value),
+			_isEmpty(orig._isEmpty){}
 	virtual ~Optional(){}
-	bool isEmpty() const {return(_paramType==paramNone?true:false);}
+	bool isEmpty() const {return _isEmpty;}
 	virtual T value() const
 	 {
 		  if(this->isEmpty())
 		  {
 			  throw (std::logic_error ("Optional is empty"));
 		  }
-		  else
-		  {
-			  return(_paramValue);
-		  }
+		  return(_value);
+
 	 }
-	optionalparam getType() const {return _paramType;};
 	T operator*() const
 	{
 		return this->value();
 	}
 	operator bool() const
-		{
-		return !(this->isEmpty());
-		}
+	{
+	return !(this->isEmpty());
+	}
 	bool operator < (const Optional &orig) const
 	{
-		if((this->_paramType==paramNone)&&(orig._paramType!=paramNone))
+		if((this->isEmpty())&&(!orig.isEmpty()))
 		{
 			return true;
 		}
-		else if((this->_paramType!=paramNone)&&(orig._paramType!=paramNone))
+		else if((!this->isEmpty())&&(!orig.isEmpty()))
 		{
-			return this->_paramValue<orig._paramValue?true:false;
+			return this->_value<orig._value?true:false;
 		}
 		return false;
 	}
 	bool operator ==(const Optional &orig) const
-		{
-			if(((orig._paramType)==(this->_paramType))&&((orig._paramType)==(paramNone)))
-				{
-				return true;
-				}
-			else if((orig._paramType)!=(this->_paramType))
-				{
-				return false;
-				}
-			else
-			{
-				if(orig._paramValue==this->_paramValue)
-				{
-					return true;
-				}
-			return false;
-			}
-		}
-	friend ostream& operator<< (ostream& os,const Optional& orig)
 	{
-		if(orig._paramType!=paramNone)
+		if((orig._isEmpty)&&(this->_isEmpty))
 		{
-			T value=orig._paramValue;
-			os<<value;
+		return true;
+		}
+		else if((orig._isEmpty) xor (this->_isEmpty))
+		{
+		return false;
+		}
+		else if(orig._value==this->_value)
+		{
+			return true;
+		}
+		return false;
 
+	}
+	friend std::ostream& operator<< (std::ostream& os,const Optional& orig)
+	{
+		if(!orig._isEmpty)
+		{
+			T value=orig._value;
+			os<<value;
 		}
 		else
 		{
@@ -96,8 +86,8 @@ public:
 
 private:
 
-T _paramValue;
-optionalparam _paramType;
+T _value;
+bool _isEmpty;
 };
 
 

@@ -28,12 +28,17 @@ public:
 		return ((_bookId==otherBook._bookId)&&(_bookName==otherBook._bookName))?
 				true:false;
 	}
-	void setLoanInfo(const LoanInfo &loanInfo)
+	inline void setLoanInfo(const LoanInfo &loanInfo)
 	{
 		_loanInfo = loanInfo;
 	}
+	inline void setNotLoaned()
+	{
+		_loanInfo=NotLoaned;
+	}
 	std::string getBookName() const {return _bookName; }
 	BookId getBookId() const {return _bookId; }
+	LoanInfo getLoanInfo() const { return _loanInfo; }
 	inline bool isLoaned() const { return _loanInfo.isLoaned(); }
 	friend ostream& operator<< (ostream &os, const Book& book) {
 	return os << "Book id: " << book.getBookId() << " Book name: " << book.getBookName();
@@ -43,6 +48,8 @@ private:
 	const BookId _bookId;
 	const string _bookName;
 	LoanInfo _loanInfo;
+
+	static const LoanInfo NotLoaned;
 };
 
 
