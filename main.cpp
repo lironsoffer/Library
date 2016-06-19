@@ -7,8 +7,8 @@ using namespace std;
 
 int main()
 {
-//    runOptionalTests();
-//    runStrongIdTests();
+    runOptionalTests();
+    runStrongIdTests();
     runLibraryTests();
     return 0;
 }

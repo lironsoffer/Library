@@ -122,11 +122,11 @@ bool Library::removeUser(const UserId &userId)
 		_users.erase(findUser(userId));
 		vector<LoanInfo> loans;
 		getLoansSortedByDate(userId,loans);
-		for(size_t i=0;i<_loansInfoByUser.erase(userId);i++)
+		size_t numberOfLoans = _loansInfoByUser.erase(userId);
+		for(size_t i=0;i<numberOfLoans;i++)
 		{
 			_bookShelf.find(loans[i].getBookId())->second.setNotLoaned();
 		}
-
 		return true;
 	}
 	catch(LibraryException&)

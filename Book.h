@@ -15,6 +15,8 @@
 using std::make_pair;
 
 class Book {
+
+
 public:
 	Book():_bookId(),_bookName(),_loanInfo(Empty){}
 //	{cout<<"Book()"<<endl;}
@@ -32,13 +34,11 @@ public:
 	{
 		_loanInfo = loanInfo;
 	}
-	inline void setNotLoaned()
-	{
-		_loanInfo=NotLoaned;
-	}
+
 	std::string getBookName() const {return _bookName; }
 	BookId getBookId() const {return _bookId; }
 	LoanInfo getLoanInfo() const { return _loanInfo; }
+	void setNotLoaned() { _loanInfo.setNotLoaned(); }
 	inline bool isLoaned() const { return _loanInfo.isLoaned(); }
 	friend ostream& operator<< (ostream &os, const Book& book) {
 	return os << "Book id: " << book.getBookId() << " Book name: " << book.getBookName();
@@ -49,7 +49,7 @@ private:
 	const string _bookName;
 	LoanInfo _loanInfo;
 
-	static const LoanInfo NotLoaned;
+
 };
 
 

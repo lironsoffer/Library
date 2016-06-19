@@ -29,6 +29,8 @@ public:
 
 	inline bool isLoaned() const { return _isLoaned; }
 
+	inline void setNotLoaned() {_isLoaned=false;}
+
 	LoanInfo& operator=(const LoanInfo &otherLoanInfo)
 	{
 		if(this==&otherLoanInfo)
