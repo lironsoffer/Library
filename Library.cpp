@@ -74,17 +74,11 @@ bool Library::removeBook(const BookId &bookId)
 
 void Library::loanBook(const UserId &userId,const LoanInfo &loanBookInfo)
 {
+	findUser(userId);
+	map<BookId,Book>::iterator bookShelfIter =
+			findBookInBookShelf(loanBookInfo.getBookId());
 
-	map<BookId,Book>::iterator bookShelfIter = _bookShelf.find(loanBookInfo.getBookId());
-	if (findUser(userId)==_users.end())
-	{
-		throw LibraryException("User is not registered with the library");
-	}
-	else if (bookShelfIter==_bookShelf.end())
-	{
-		throw LibraryException("Book is not registered with the library");
-	}
-	else if (bookShelfIter->second.isLoaned())
+	if (bookShelfIter->second.isLoaned())
 	{
 		throw LibraryException("The book is already loaned by a different user");
 	}
@@ -93,17 +87,13 @@ void Library::loanBook(const UserId &userId,const LoanInfo &loanBookInfo)
 	_loansInfoByUser.insert(make_pair(userId,loanBookInfo.getBookId()));
 }
 
-bool Library::returnBook(const UserId &userId, const BookId &bookId) // TODO: complete it. waiting for user map
+bool Library::returnBook(const UserId &userId, const BookId &bookId)
 {
 	findUser(userId);
-	map<BookId,Book>::iterator bookShelfIter = _bookShelf.find(bookId);
-	if (bookShelfIter==_bookShelf.end())
-	{
-		throw LibraryException("Book does not exist in the library");
-	}
+	map<BookId,Book>::iterator bookShelfIter = findBookInBookShelf(bookId);
 
-
-	multimap<UserId,BookId>::iterator loansInfoByUserIter = findLoanByUser(userId,bookId);
+	multimap<UserId,BookId>::iterator loansInfoByUserIter =
+			findLoanByUser(userId,bookId);
 	if (loansInfoByUserIter==_loansInfoByUser.end())
 	{
 		return false;
@@ -135,6 +125,23 @@ bool Library::removeUser(const UserId &userId)
 	}
 }
 
+void Library::getLoansSortedByDate(const UserId &userId,vector<LoanInfo> &loans)
+{
+	loans.clear();
+	multimap<UserId,BookId>::const_iterator begin =
+			_loansInfoByUser.lower_bound(userId);
+	multimap<UserId,BookId>::const_iterator end =
+			_loansInfoByUser.upper_bound(userId);
+
+	while(begin!=end)
+	{
+		BookId bookId = begin->second;
+		loans.push_back(_bookShelf.find(bookId)->second.getLoanInfo());
+		++begin;
+	}
+	sort(loans.begin(),loans.end(),isLoanedEarlier);
+}
+
 map<UserId,string>::const_iterator Library::findUser(const UserId& userId) const
 {
 	map<UserId,string>::const_iterator usersIter = _users.find(userId);
@@ -154,4 +161,38 @@ map<UserId,string>::iterator Library::findUser(const UserId& userId)
 	}
 	return usersIter;
 }
+
+
+map<BookId,Book>::iterator Library::findBookInBookShelf(const BookId &bookId)
+{
+	map<BookId,Book>::iterator iter = _bookShelf.find(bookId);
+	if (iter==_bookShelf.end())
+	{
+		throw LibraryException("Book is not registered with the library");
+	}
+	return iter;
+}
+
+multimap<UserId,BookId>::iterator Library::findLoanByUser(const UserId &userId,
+		const BookId &bookId)
+{
+	findUser(userId);
+
+	multimap<UserId,BookId>::iterator begin =
+			_loansInfoByUser.lower_bound(userId);
+	multimap<UserId,BookId>::iterator end =
+			_loansInfoByUser.upper_bound(userId);
+
+	while(begin!=end)
+	{
+		if (begin->second==bookId)
+		{
+			return begin;
+		}
+		++begin;
+	}
+
+	return _loansInfoByUser.end();
+}
+
 

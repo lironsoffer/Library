@@ -12,6 +12,9 @@
 #include "Date.h"
 using std::string;
 
+class LoanInfo;
+bool isLoanedEarlier(const LoanInfo &left,const LoanInfo &right);
+
 class LoanInfo {
 public:
 	LoanInfo(None_type=Empty):_bookId(BookId(0)),_date(),_isLoaned(false){}

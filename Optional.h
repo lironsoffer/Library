@@ -23,25 +23,18 @@ public:
 	Optional(const Optional & orig): _value(orig._value),
 			_isEmpty(orig._isEmpty){}
 	virtual ~Optional(){}
-	bool isEmpty() const {return _isEmpty;}
-	virtual T value() const
+	inline bool isEmpty() const {return _isEmpty;}
+	inline virtual T value() const
 	 {
 		  if(this->isEmpty())
 		  {
 			  throw (std::logic_error ("Optional is empty"));
 		  }
 		  return(_value);
-
 	 }
-	T operator*() const
-	{
-		return this->value();
-	}
-	operator bool() const
-	{
-	return !(this->isEmpty());
-	}
-	bool operator < (const Optional &orig) const
+	inline T operator*() const {return this->value();}
+	inline operator bool() const {	return !(this->isEmpty()); }
+	inline bool operator < (const Optional &orig) const
 	{
 		if((this->isEmpty())&&(!orig.isEmpty()))
 		{

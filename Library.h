@@ -39,20 +39,7 @@ public:
 	Optional<string> getUserInfo(const UserId &userId) const;
 
 	bool removeUser(const UserId &userId);
-	void getLoansSortedByDate(const UserId &userId, vector<LoanInfo> &loans)
-	{
-		loans.clear();
-		multimap<UserId,BookId>::const_iterator begin = _loansInfoByUser.lower_bound(userId);
-		multimap<UserId,BookId>::const_iterator end = _loansInfoByUser.upper_bound(userId);
-
-		while(begin!=end)
-		{
-			BookId bookId = begin->second;
-			loans.push_back(_bookShelf.find(bookId)->second.getLoanInfo());
-			++begin;
-		}
-		sort(loans.begin(),loans.end(),isLoanedEarlier);
-	}
+	void getLoansSortedByDate(const UserId &userId, vector<LoanInfo> &loans);
 
 private:
 	map<BookId,Book> _bookShelf;
@@ -62,24 +49,9 @@ private:
 	map<UserId,string>::const_iterator findUser(const UserId& userId) const;
 	map<UserId,string>::iterator findUser(const UserId& userId);
 
-	multimap<UserId,BookId>::iterator findLoanByUser(const UserId &userId, const BookId &bookId)
-	{
-		findUser(userId);
-
-		multimap<UserId,BookId>::iterator begin = _loansInfoByUser.lower_bound(userId);
-		multimap<UserId,BookId>::iterator end = _loansInfoByUser.upper_bound(userId);
-
-		while(begin!=end)
-		{
-			if (begin->second==bookId)
-			{
-				return begin;
-			}
-			++begin;
-		}
-
-		return _loansInfoByUser.end();
-	}
+	multimap<UserId,BookId>::iterator findLoanByUser(const UserId &userId,
+			const BookId &bookId);
+	map<BookId,Book>::iterator findBookInBookShelf(const BookId &bookId);
 
 };
 
