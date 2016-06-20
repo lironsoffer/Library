@@ -2,7 +2,7 @@
 #include "StrongId.h"
 #include <string>
 #include <iostream>
-//
+
 static void testEmptyConstruction();
 static void testName();
 static void testConstructionWithValue();
@@ -59,6 +59,7 @@ void testConstructionWithValue()
     std::cout << "Empty: " << id.isEmpty() << std::endl;
     std::cout << "Output: " << id << std::endl;
 }
+
 
 void testEqualityComparison()
 {
@@ -121,7 +122,7 @@ void testCopy()
     TestId copyFromNonEmpty = nonEmpty;
     std::cout << "copyFromNonEmpty = " << copyFromNonEmpty << std::endl;
 }
-//
+
 void testAssign()
 {
     std::cout << "-- testAssign" << std::endl;

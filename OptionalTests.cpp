@@ -96,7 +96,7 @@ void testEmptyDereference()
     const Optional<int> empty;
     try
     {
-        std::cout << empty.value() << std::endl;
+        std::cout << *empty << std::endl;
     }
     catch(std::logic_error& logicError)
     {

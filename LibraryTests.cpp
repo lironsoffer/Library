@@ -3,7 +3,7 @@
 #include "LibraryTests.h"
 #include "LoanInfo.h"
 #include "Library.h"
-//
+
 static void testLoanInfo();
 static void testAddUser();
 static void testAddBook();
@@ -16,8 +16,9 @@ static void testBadLoans();
 static void testRemovingUserAlsoRemovesLoans();
 static void testRemovingLoanedBookCausesException();
 static void testReturnLoanedBook();
+
 void testBadReturnLoanedBook();
-//
+
 void runLibraryTests()
 {
     std::cout << "== Library tests ==" << std::endl;
@@ -64,7 +65,6 @@ void testAddBook()
 
     Optional<std::string> bookInfo = library.getBookInfo(BookId(10));
     std::cout << "Book details: " << bookInfo << std::endl;
-
 }
 
 void testGetNonExistantUser()
@@ -202,7 +202,7 @@ void testRemovingUserAlsoRemovesLoans()
     library.removeUser(UserId(10));
 
     // Books 100 and 200 are now free. So user 20 can loan them without getting
-//    // an exception.
+    // an exception.
     library.loanBook(UserId(20), LoanInfo(BookId(100), 1, 2, 4));
     library.loanBook(UserId(20), LoanInfo(BookId(200), 1, 2, 5));
 
