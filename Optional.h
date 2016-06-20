@@ -8,8 +8,6 @@
 #include <iostream>
 #include <typeinfo>
 #include <stdexcept>
-//using namespace std;
-using std::string;
 
 class None_type {};
 static const None_type None;

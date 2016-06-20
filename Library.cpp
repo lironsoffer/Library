@@ -9,12 +9,12 @@
 
 void printLibraryError(const LibraryException &error)
 {
-	cerr<<error.what()<<endl;
+	std::cerr<<error.what()<<std::endl;
 }
 
-void Library::addUser(const UserId &userId, const string &userName)
+void Library::addUser(const UserId &userId, const std::string &userName)
 {
-	if (_users.insert(make_pair(userId,userName)).second==0)
+	if (_users.insert(std::make_pair(userId,userName)).second==0)
 	{
 		throw LibraryException("User is already registered with the library");
 	}
@@ -22,10 +22,10 @@ void Library::addUser(const UserId &userId, const string &userName)
 
 void Library::addBook(const BookId &bookId, const std::string &bookName)
 {
+	using std::pair;
+	std::pair<BookId,Book> p = std::make_pair(bookId,Book(bookId,bookName));
 
-	pair<BookId,Book> p = make_pair(bookId,Book(bookId,bookName));
-
-	pair<map<BookId,Book>::iterator,bool> tmp (_bookShelf.insert(p));
+	pair<std::map<BookId,Book>::iterator,bool> tmp (_bookShelf.insert(p));
 	if (!tmp.second)
 	{
 		throw LibraryException("Book Id already exists");
@@ -34,7 +34,7 @@ void Library::addBook(const BookId &bookId, const std::string &bookName)
 
 Optional<std::string> Library::getBookInfo(const BookId &bookId) const
 {
-	map<BookId,Book>::const_iterator iter = _bookShelf.find(bookId);
+	std::map<BookId,Book>::const_iterator iter = _bookShelf.find(bookId);
 	if (iter!=_bookShelf.end())
 	{
 		return iter->second.getBookName();
@@ -42,7 +42,7 @@ Optional<std::string> Library::getBookInfo(const BookId &bookId) const
 	return None;
 }
 
-Optional<string> Library::getUserInfo(const UserId &userId) const
+Optional<std::string> Library::getUserInfo(const UserId &userId) const
 {
 	try
 	{
@@ -57,7 +57,7 @@ Optional<string> Library::getUserInfo(const UserId &userId) const
 bool Library::removeBook(const BookId &bookId)
 {
 
-	map<BookId,Book>::iterator bookShelfIter = _bookShelf.find(bookId);
+	std::map<BookId,Book>::iterator bookShelfIter = _bookShelf.find(bookId);
 	if (bookShelfIter==_bookShelf.end())
 	{
 		return false;
@@ -75,7 +75,7 @@ bool Library::removeBook(const BookId &bookId)
 void Library::loanBook(const UserId &userId,const LoanInfo &loanBookInfo)
 {
 	findUser(userId);
-	map<BookId,Book>::iterator bookShelfIter =
+	std::map<BookId,Book>::iterator bookShelfIter =
 			findBookInBookShelf(loanBookInfo.getBookId());
 
 	if (bookShelfIter->second.isLoaned())
@@ -84,15 +84,15 @@ void Library::loanBook(const UserId &userId,const LoanInfo &loanBookInfo)
 	}
 
 	bookShelfIter->second.setLoanInfo(loanBookInfo);
-	_loansInfoByUser.insert(make_pair(userId,loanBookInfo.getBookId()));
+	_loansInfoByUser.insert(std::make_pair(userId,loanBookInfo.getBookId()));
 }
 
 bool Library::returnBook(const UserId &userId, const BookId &bookId)
 {
 	findUser(userId);
-	map<BookId,Book>::iterator bookShelfIter = findBookInBookShelf(bookId);
+	std::map<BookId,Book>::iterator bookShelfIter = findBookInBookShelf(bookId);
 
-	multimap<UserId,BookId>::iterator loansInfoByUserIter =
+	std::multimap<UserId,BookId>::iterator loansInfoByUserIter =
 			findLoanByUser(userId,bookId);
 	if (loansInfoByUserIter==_loansInfoByUser.end())
 	{
@@ -110,7 +110,7 @@ bool Library::removeUser(const UserId &userId)
 	try
 	{
 		_users.erase(findUser(userId));
-		vector<LoanInfo> loans;
+		std::vector<LoanInfo> loans;
 		getLoansSortedByDate(userId,loans);
 		size_t numberOfLoans = _loansInfoByUser.erase(userId);
 		for(size_t i=0;i<numberOfLoans;i++)
@@ -125,12 +125,13 @@ bool Library::removeUser(const UserId &userId)
 	}
 }
 
-void Library::getLoansSortedByDate(const UserId &userId,vector<LoanInfo> &loans)
+void Library::getLoansSortedByDate(const UserId &userId,
+		std::vector<LoanInfo> &loans)
 {
 	loans.clear();
-	multimap<UserId,BookId>::const_iterator begin =
+	std::multimap<UserId,BookId>::const_iterator begin =
 			_loansInfoByUser.lower_bound(userId);
-	multimap<UserId,BookId>::const_iterator end =
+	std::multimap<UserId,BookId>::const_iterator end =
 			_loansInfoByUser.upper_bound(userId);
 
 	while(begin!=end)
@@ -142,9 +143,9 @@ void Library::getLoansSortedByDate(const UserId &userId,vector<LoanInfo> &loans)
 	sort(loans.begin(),loans.end(),isLoanedEarlier);
 }
 
-map<UserId,string>::const_iterator Library::findUser(const UserId& userId) const
+std::map<UserId,std::string>::const_iterator Library::findUser(const UserId& userId) const
 {
-	map<UserId,string>::const_iterator usersIter = _users.find(userId);
+	std::map<UserId,std::string>::const_iterator usersIter = _users.find(userId);
 	if (usersIter==_users.end())
 	{
 		throw LibraryException("User is not registered with the library");
@@ -152,9 +153,9 @@ map<UserId,string>::const_iterator Library::findUser(const UserId& userId) const
 	return usersIter;
 }
 
-map<UserId,string>::iterator Library::findUser(const UserId& userId)
+std::map<UserId,std::string>::iterator Library::findUser(const UserId& userId)
 {
-	map<UserId,string>::iterator usersIter = _users.find(userId);
+	std::map<UserId,std::string>::iterator usersIter = _users.find(userId);
 	if (usersIter==_users.end())
 	{
 		throw LibraryException("User is not registered with the library");
@@ -163,9 +164,9 @@ map<UserId,string>::iterator Library::findUser(const UserId& userId)
 }
 
 
-map<BookId,Book>::iterator Library::findBookInBookShelf(const BookId &bookId)
+std::map<BookId,Book>::iterator Library::findBookInBookShelf(const BookId &bookId)
 {
-	map<BookId,Book>::iterator iter = _bookShelf.find(bookId);
+	std::map<BookId,Book>::iterator iter = _bookShelf.find(bookId);
 	if (iter==_bookShelf.end())
 	{
 		throw LibraryException("Book is not registered with the library");
@@ -173,14 +174,14 @@ map<BookId,Book>::iterator Library::findBookInBookShelf(const BookId &bookId)
 	return iter;
 }
 
-multimap<UserId,BookId>::iterator Library::findLoanByUser(const UserId &userId,
+std::multimap<UserId,BookId>::iterator Library::findLoanByUser(const UserId &userId,
 		const BookId &bookId)
 {
 	findUser(userId);
 
-	multimap<UserId,BookId>::iterator begin =
+	std::multimap<UserId,BookId>::iterator begin =
 			_loansInfoByUser.lower_bound(userId);
-	multimap<UserId,BookId>::iterator end =
+	std::multimap<UserId,BookId>::iterator end =
 			_loansInfoByUser.upper_bound(userId);
 
 	while(begin!=end)

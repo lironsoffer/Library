@@ -12,8 +12,6 @@
 #include "Properties.h"
 #include "LoanInfo.h"
 
-using std::make_pair;
-
 class Book {
 
 
@@ -37,14 +35,14 @@ public:
 	LoanInfo getLoanInfo() const { return _loanInfo; }
 	void setNotLoaned() { _loanInfo.setNotLoaned(); }
 	inline bool isLoaned() const { return _loanInfo.isLoaned(); }
-	friend ostream& operator<< (ostream &os, const Book& book) {
+	friend std::ostream& operator<< (std::ostream &os, const Book& book) {
 	return os << "Book id: " << book.getBookId() << " Book name: " <<
 			book.getBookName();
 	}
 
 private:
 	const BookId _bookId;
-	const string _bookName;
+	const std::string _bookName;
 	LoanInfo _loanInfo;
 
 

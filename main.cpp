@@ -3,7 +3,7 @@
 #include "StrongIdTests.h"
 #include "LibraryTests.h"
 
-using namespace std;
+//using namespace std;
 
 int main()
 {

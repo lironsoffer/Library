@@ -12,7 +12,6 @@
 #include <string>
 #include <stdexcept>
 #include "Optional.h"
-using std::string;
 
 template<typename Properties>
 class StrongId : public Optional<typename Properties::ValueType> {

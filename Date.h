@@ -8,7 +8,6 @@
 #ifndef DATE_H_
 #define DATE_H_
 #include <iostream>
-using namespace std;
 
 class Date {
 public:
@@ -19,7 +18,7 @@ public:
 			_year(orig._year){}
 	virtual ~Date(){}
 
-	friend ostream& operator<< (ostream& os,const Date &date)
+	friend std::ostream& operator<< (std::ostream& os,const Date &date)
 	{
 		return os<<"date: "<<date._day<<"."<<date._month<<"."<<date._year;
 	}

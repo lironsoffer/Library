@@ -10,7 +10,6 @@
 #include <string>
 #include "Properties.h"
 #include "Date.h"
-using std::string;
 
 class LoanInfo;
 bool isLoanedEarlier(const LoanInfo &left,const LoanInfo &right);
@@ -46,11 +45,11 @@ public:
 		return *this;
 	}
 
-	friend ostream& operator<< (ostream& os,const LoanInfo &loanInfo)
+	friend std::ostream& operator<< (std::ostream& os,const LoanInfo &loanInfo)
 	{
 		if(!loanInfo.isLoaned())
 		{
-			throw logic_error("Book is Not loaned");
+			throw std::logic_error("Book is Not loaned");
 		}
 		return os<<"LoanInfo: { id: {"<<
 				loanInfo._bookId<<"}, "<<loanInfo._date<<"}";
