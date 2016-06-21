@@ -7,51 +7,50 @@
 
 #ifndef DATE_H_
 #define DATE_H_
+/*
+ * This Module provides basic solution to store, present and compare dates.
+ *
+ * Date() - Constructor
+ *
+ * explicit Date(const unsigned int day, const unsigned int month,
+ * 			const unsigned int  year) - Constructor
+ */
+
 #include <iostream>
 
 class Date {
 public:
+/*
+ * Date() - Constructor.
+ * Builds the undefined date 0/0/0.
+ */
 	Date():_day(0),_month(0),_year(0){}
-	explicit Date(const  unsigned int day, const unsigned int month,
+/* explicit Date(const unsigned int day, const unsigned int month,
+ * 			const unsigned int  year) - Constructor for a date.  - Constructor
+ * 	Builds the date according to the parameters - day,month,year.
+ *
+ */
+	explicit Date(const unsigned int day, const unsigned int month,
 			const unsigned int  year): _day(day), _month(month), _year(year){}
 	Date(const Date& orig): _day(orig._day),_month(orig._month),
 			_year(orig._year){}
 	virtual ~Date(){}
 
-	friend std::ostream& operator<< (std::ostream& os,const Date &date)
-	{
-		return os<<"date: "<<date._day<<"."<<date._month<<"."<<date._year;
-	}
-
-	friend bool operator< (const Date &left,const Date &right)
-	{
-		if(left._year<right._year)
-		{
-			return true;
-		}
-		else if((left._year==right._year)&&(left._month<right._month))
-		{
-			return true;
-		}
-		else if((left._year==right._year)&&(left._month==right._month)&&(left._day<right._day))
-		{
-			return true;
-		}
-		return false;
-	}
-
-	friend bool operator==(const Date &dateLeft,const Date &dateRight)
-	{
-		return ((dateLeft._day==dateRight._day)&&
-				(dateLeft._month==dateRight._month)&&
-				(dateLeft._year==dateRight._year));
-	}
+	friend std::ostream& operator<< (std::ostream& os,const Date &date);
+	friend bool operator< (const Date &left,const Date &right);
+	friend bool operator==(const Date &dateLeft,const Date &dateRight);
 
 private:
 	unsigned int _day;
 	unsigned int _month;
 	unsigned int _year;
 };
+
+inline std::ostream& operator<< (std::ostream& os,const Date &date)
+{
+	return os<<"date: "<<date._day<<"."<<date._month<<"."<<date._year;
+}
+
 
 
 #endif /* DATE_H_ */
