@@ -7,7 +7,10 @@
 
 #ifndef BOOK_H_
 #define BOOK_H_
-
+/*
+ * This Module represents a book by a bookId and a string name.
+ * It has the functionality to set and get related LoanInfo.
+ */
 #include <utility>
 #include "Properties.h"
 #include "LoanInfo.h"
@@ -29,13 +32,20 @@ public:
 		_bookId(bookId),_bookName(bookName),_loanInfo(Empty) {}
 	Book(const Book &orig):_bookId(orig._bookId),_bookName(orig._bookName),
 				_loanInfo(orig._loanInfo){}
-
+/*
+ * bool operator==(Book &otherBook)
+ * Return true if the two books are identical with both BookId and name.
+ */
 	bool operator==(Book &otherBook);
 	inline void setLoanInfo(const LoanInfo &loanInfo) { _loanInfo = loanInfo; }
 	inline std::string getBookName() const {return *_bookName; }
 	inline BookId getBookId() const { return _bookId; }
 	inline LoanInfo getLoanInfo() const { return _loanInfo; }
 	inline void setNotLoaned() { _loanInfo.setNotLoaned(); }
+	/*
+	 * isLoaned() -
+	 * Return true if book have been set Loaned and false otherwise.
+	 */
 	inline bool isLoaned() const { return _loanInfo.isLoaned(); }
 
 	friend std::ostream& operator<< (std::ostream &os, const Book& book);
