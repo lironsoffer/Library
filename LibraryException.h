@@ -7,7 +7,9 @@
 
 #ifndef LIBRARYEXCEPTION_H_
 #define LIBRARYEXCEPTION_H_
-
+/*
+ * This module is an extension of the runtime_error exception.
+ */
 #include<stdexcept>
 
 class LibraryException : public std::runtime_error {
