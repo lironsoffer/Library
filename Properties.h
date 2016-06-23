@@ -7,12 +7,18 @@
 
 #ifndef PROPERTIES_H_
 #define PROPERTIES_H_
-
+/*
+ * Properties.h
+ * This module defines properties for UserId and BookId.
+ */
 #include "Properties.h"
 #include "StrongId.h"
 
 static const None_type Empty;
 
+/*
+ * BookIdProperties - This module defines UserId
+ */
 class BookIdProperties
 {
 public:
@@ -20,6 +26,9 @@ public:
     static const char* name() { return "BookId"; }
 };
 
+/*
+ * UserIdProperties - This module defines BookId.
+ */
 class UserIdProperties
 {
 public:

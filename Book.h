@@ -42,10 +42,10 @@ public:
 	inline BookId getBookId() const { return _bookId; }
 	inline LoanInfo getLoanInfo() const { return _loanInfo; }
 	inline void setNotLoaned() { _loanInfo.setNotLoaned(); }
-	/*
-	 * isLoaned() -
-	 * Return true if book have been set Loaned and false otherwise.
-	 */
+/*
+ * isLoaned() -
+ * Return true if book have been set Loaned and false otherwise.
+ */
 	inline bool isLoaned() const { return _loanInfo.isLoaned(); }
 
 	friend std::ostream& operator<< (std::ostream &os, const Book& book);
@@ -62,6 +62,9 @@ inline bool Book::operator==(Book &otherBook)
 			(_bookName==otherBook._bookName))?true:false;
 }
 
+/*
+ * operator<<: prints the standard for a specific book
+ */
 inline std::ostream& operator<< (std::ostream &os, const Book& book)
 {
 	return os << "Book id: " << book.getBookId() << " Book name: " <<

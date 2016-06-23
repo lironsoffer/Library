@@ -14,6 +14,10 @@
 
 class LibraryException : public std::runtime_error {
 public:
+/*
+ * LibraryException(const std::string &str) - Constructor
+ * @param str - the string which represents the error
+ */
 	LibraryException(const std::string &str) : std::runtime_error(str){}
 };
 

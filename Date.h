@@ -9,11 +9,6 @@
 #define DATE_H_
 /*
  * This Module provides basic solution to store, present and compare dates.
- *
- * Date() - Constructor
- *
- * explicit Date(const unsigned int day, const unsigned int month,
- * 			const unsigned int  year) - Constructor
  */
 
 #include <iostream>
@@ -35,7 +30,6 @@ public:
 	Date(const Date& orig): _day(orig._day),_month(orig._month),
 			_year(orig._year){}
 	virtual ~Date(){}
-
 	friend std::ostream& operator<< (std::ostream& os,const Date &date);
 	friend bool operator< (const Date &left,const Date &right);
 	friend bool operator==(const Date &dateLeft,const Date &dateRight);
@@ -46,6 +40,13 @@ private:
 	unsigned int _year;
 };
 
+/*
+ *  operator<<:   used for printing
+ *  @param os - object of ostream&
+ *  @param date - a class member of Date
+ *  @return: an ostream& type for the function that used the operator,
+ *  for printing.
+ */
 inline std::ostream& operator<< (std::ostream& os,const Date &date)
 {
 	return os<<"date: "<<date._day<<"."<<date._month<<"."<<date._year;
